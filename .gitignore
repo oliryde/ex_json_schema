@@ -4,5 +4,6 @@
 erl_crash.dump
 *.ez
 mix.lock
+*.plt
 
 .DS_Store
