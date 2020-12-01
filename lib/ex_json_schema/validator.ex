@@ -278,9 +278,11 @@ defmodule ExJsonSchema.Validator do
   end
 
   defp validate_aspect(_, _, {"multipleOf", multiple_of}, data) when is_number(data) do
-    factor = data / multiple_of
+    data = Decimal.new("#{data}")
+    multiple_of = Decimal.new("#{multiple_of}")
+    factor = Decimal.div(data, multiple_of)
 
-    case Float.floor(factor) == factor do
+    case Decimal.integer?(factor) do
       true -> []
       false -> [%Error{error: %Error.MultipleOf{expected: multiple_of}, path: ""}]
     end
